@@ -173,8 +173,8 @@ document.addEventListener("DOMContentLoaded", function () {
         if (loader) loader.style.display = "block";
 
         setTimeout(() => {
-            window.location.href = "dashboard.html";
-        }, 800);
+        window.location.href = url; // 👈 FIX: Now it goes where you tell it to
+    }, 800);
     }
 
     // EXPOSE TO WINDOW

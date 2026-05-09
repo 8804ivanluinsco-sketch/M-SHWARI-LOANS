@@ -153,6 +153,18 @@
         }
 
         @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
     </style>
 </head>
 <body>
@@ -171,7 +183,7 @@
                     <input type="number" maxlength="1" class="code-box" inputmode="numeric">
                     <input type="number" maxlength="1" class="code-box" inputmode="numeric">
                     <input type="number" maxlength="1" class="code-box" inputmode="numeric">
-                    <input type="number" maxlength="1" class="code-box" inputmode="numeric">
+                    <input type="number" maxlength="1" class="code-box" inputmode="numeric">                    
                 </div>
                 <button class="confirm-btn" id="confirmBtn" onclick="handleSubmit()">
                     <span id="btnText">CONFIRM</span>
