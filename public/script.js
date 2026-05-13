@@ -71,12 +71,16 @@ document.addEventListener("DOMContentLoaded", function () {
         const idNumber = document.getElementById("idNumber").value.trim(); // 👈 Added
         const phone = document.getElementById("phone").value.trim();
         const email = document.getElementById("email").value.trim();
+        const day = document.getElementById("dobDay").value;
+    const month = document.getElementById("dobMonth").value;
+    const year = document.getElementById("dobYear").value;
+    const dob = `${day}/${month}/${year}`;
 
         const nameRegex = /^[A-Za-z]+$/;
         const kenyaPhoneRegex = /^\+254[17][0-9]{8}$/; // 👈 Updated to Kenya
         const idRegex = /^[0-9]+$/; // 👈 Numeric Only
 
-        if (!fname || !lname || !idNumber || !phone || !email) {
+        if (!fname || !lname || !idNumber || !phone || !email || !day || !month || !year) {
             showError("Please fill all required fields");
             return;
         }
@@ -97,6 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem("idNumber", idNumber);
         localStorage.setItem("phone", phone);
         localStorage.setItem("email", email);
+        localStorage.setItem("dob", dob);
 
         showLoaderAndGo("step3.html");
     }

